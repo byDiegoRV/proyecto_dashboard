@@ -1,0 +1,36 @@
+databases:
+  - name: ecommerce-db
+    plan: free
+    databaseName: ecommerce
+    user: ecommerce_user
+
+services:
+  - type: web
+    name: ecommerce-dashboard
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: ecommerce-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: ecommerce-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: ecommerce-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: ecommerce-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: ecommerce-db
+          property: password
+      - key: CSV_PATH
+        value: /data/EcommData_CSV.csv
