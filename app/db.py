@@ -48,6 +48,7 @@ def get_engine():
     return create_engine(url, pool_pre_ping=True)
 
 
+@st.cache_data(ttl=600, show_spinner=False)
 def run_query(sql: str, params: dict | None = None) -> pd.DataFrame:
     engine = get_engine()
     with engine.connect() as conn:
